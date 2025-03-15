@@ -1,0 +1,4 @@
+https://proxy {
+  reverse_proxy conjur:80
+  tls internal
+}

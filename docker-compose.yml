@@ -66,13 +66,14 @@ services:
       - 8080:80
 
   proxy:
-    image: nginx:latest
-    container_name: nginx_proxy
+    build:
+      dockerfile: ./caddy.Dockerfile
+    container_name: caddy_proxy
     ports:
       - "8443:443"
     volumes:
-      - ./conf/:/etc/nginx/conf.d/:ro
-      - ./conf/tls/:/etc/nginx/tls/:ro
+      - ./conf/caddy/:/etc/caddy/:Z
+      # - ./conf/caddy/:/data/
     depends_on:
     - conjur
     - openssl
@@ -85,4 +86,4 @@ services:
     entrypoint: sleep
     command: infinity
     volumes:
-    - ./conf/policy:/policy
+      - ./conf/policy:/policy:Z
